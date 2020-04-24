@@ -3,12 +3,19 @@ defmodule Filesize.Worker do
 
   def start_link(init_arg), do: GenServer.start_link(__MODULE__, init_arg)
 
+  @impl true
   def init(_init_arg) do
     Filesize.WorkerManager.started()
     Process.send_after(self(), :traverse_one_directory, 0)
     {:ok, nil}
   end
 
+  @impl true
+  def terminate(_reason, _state) do
+    Filesize.WorkerManager.done(self())
+  end
+
+  @impl true
   def handle_info(:traverse_one_directory, _from) do
     work_dir = Filesize.Queue.get_next_directory()
     traverse(work_dir)
