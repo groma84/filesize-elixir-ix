@@ -3,7 +3,15 @@ defmodule Filesize.WorkerManager do
 
   @me __MODULE__
 
-  def start_link(max_workers), do: GenServer.start_link(__MODULE__, max_workers, name: @me)
+  def start_link(max_workers) do
+    IO.puts("WorkerManager start_link")
+    GenServer.start_link(__MODULE__, max_workers, name: @me)
+  end
+
+  @impl true
+  def terminate(_reason, _state) do
+    IO.puts("WorkerManager terminate")
+  end
 
   @impl true
   def init(max_workers), do: {:ok, %{max_workers: max_workers, current_workers: 0}}

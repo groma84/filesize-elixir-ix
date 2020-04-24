@@ -1,5 +1,5 @@
 defmodule Filesize.StateSupervisor do
-  use Supervisor, restart: :temporary
+  use Supervisor
 
   def start_link(init_arg) do
     Supervisor.start_link(__MODULE__, init_arg)

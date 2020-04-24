@@ -15,4 +15,8 @@ defmodule Filesize.AppSupervisor do
 
     Supervisor.init(children, strategy: :rest_for_one)
   end
+
+  def crash() do
+    Supervisor.stop(__MODULE__, :let_it_crash)
+  end
 end

@@ -3,7 +3,10 @@ defmodule Filesize.WorkerSupervisor do
 
   @me __MODULE__
 
-  def start_link(init_arg), do: DynamicSupervisor.start_link(__MODULE__, init_arg, name: @me)
+  def start_link(init_arg) do
+    IO.puts("WorkerSupervisor start_link")
+    DynamicSupervisor.start_link(__MODULE__, init_arg, name: @me)
+  end
 
   def init(_init_arg), do: DynamicSupervisor.init(strategy: :one_for_one)
 
